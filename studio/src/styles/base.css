@@ -1,0 +1,162 @@
+/* ============================================================
+   Clockwork Bench — reset / 排版 / 机械动效原语
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-ui);
+  font-size: var(--fs-body);
+  line-height: 20px;
+  color: var(--text-primary);
+  background: var(--bg-abyss);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+::selection {
+  background: var(--accent-dim);
+}
+
+/* 数字一律等宽不抖动 */
+.num,
+.mono,
+kbd,
+code,
+pre {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-disp);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+h1 { font-size: var(--fs-display); line-height: 30px; }
+h2 { font-size: var(--fs-h2); line-height: 24px; }
+h3 { font-size: var(--fs-h3); line-height: 20px; }
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); }
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+input,
+textarea,
+select {
+  font: inherit;
+  color: var(--text-primary);
+  background: linear-gradient(180deg, #0d1015, #12161d);
+  border: 1px solid var(--line-subtle);
+  border-radius: var(--r-sm);
+  outline: none;
+  box-shadow: var(--well-inset);
+  transition: border-color var(--t-fast) var(--ease-mech), box-shadow var(--t-fast) var(--ease-mech);
+}
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--accent);
+  box-shadow: var(--well-inset), 0 0 0 2px var(--accent-dim);
+}
+::placeholder { color: var(--text-muted); }
+
+/* 滚动条：细钢条 */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--steel); }
+
+/* ---------- 机械动效原语 ---------- */
+
+/* ① Gear 齿轮空转：一切"运行中" */
+@keyframes gear-spin {
+  to { transform: rotate(360deg); }
+}
+.gear {
+  display: inline-flex;
+  animation: gear-spin 1.2s linear infinite;
+  transform-origin: center;
+}
+.gear--fast { animation-duration: 0.5s; }
+/* 点火：起步带 200ms 加速 */
+.gear--ignition { animation: gear-spin 1.2s linear infinite, gear-ignite 200ms var(--ease-mech); }
+@keyframes gear-ignite {
+  from { transform: rotate(-40deg); }
+}
+
+/* ④ Stamp 冲压入场：新内容出现 */
+@keyframes stamp-in {
+  from { opacity: 0; transform: translateY(3px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.stamp { animation: stamp-in var(--t-fast) var(--ease-mech) both; }
+
+/* ⑥ 滑台平移：页面/面板入场 */
+@keyframes slide-in {
+  from { opacity: 0; transform: translateX(12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.slide-in { animation: slide-in var(--t-med) var(--ease-mech) both; }
+
+/* ② Ratchet 棘轮格（进度槽背景条纹） */
+.ratchet-track {
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--line-subtle) 0 1px,
+    transparent 1px 8px
+  );
+}
+
+/* ⑤ 等待审批：道闸黄黑斜纹 */
+.gate-stripe {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--warning) 0 8px,
+    var(--bg-abyss) 8px 16px
+  );
+}
+
+/* 呼吸（仅审批等待用琥珀呼吸，非光效） */
+@keyframes mech-breathe {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+.breathe { animation: mech-breathe 1.6s var(--ease-mech) infinite; }
+
+/* 弱化动效偏好 */
+@media (prefers-reduced-motion: reduce) {
+  .gear,
+  .gear--fast,
+  .gear--ignition,
+  .breathe {
+    animation: none !important;
+  }
+  .stamp,
+  .slide-in {
+    animation-duration: 1ms !important;
+  }
+}

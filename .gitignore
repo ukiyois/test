@@ -1,0 +1,55 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# 数据与运行时（含 SQLite、日志、PID、llama.cpp 引擎二进制、GGUF 模型、补丁备份）
+data/
+
+# 前端
+node_modules/
+dist/
+
+# 环境变量与密钥
+.env
+*.env
+.env.*
+
+# 模型权重（保留 config/tokenizer 等元数据，权重文件不上传）
+*.safetensors
+*.bin
+*.gguf
+*.onnx
+*.onnx_data
+*.msgpack
+*.h5
+*.ot
+*.tflite
+*.pt
+*.pth
+*.ckpt
+rust_model.ot
+model.safetensors.index.json
+
+# HuggingFace 缓存
+.cache/
+
+# 参考仓库（仅本地参考，不上传）
+third_party/
+
+# 废弃目录（源码已迁入 studio/）
+workflow-ui/
+web/studio-assets/
+
+# 前端构建产物（由 studio/ vite build 生成，不上传）
+web/app-assets/
+
+# 调试残留
+dbg_out.txt
+dbg2_out.txt
+*.log
+
+# 操作系统
+.DS_Store
+Thumbs.db

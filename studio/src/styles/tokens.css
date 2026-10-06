@@ -1,0 +1,122 @@
+/* ============================================================
+   LLMmodol · Clockwork Bench — 设计令牌
+   唯一事实来源：docs/ui-redesign-spec.md §2/§3/§4
+   ============================================================ */
+
+:root {
+  /* 背景层级（由远及近） */
+  --bg-abyss: #0b0e13;
+  --bg-deep: #10141b;
+  --bg-surface: #161b24;
+  --bg-raised: #1d2430;
+  --bg-overlay: #242c3a;
+
+  /* 刻痕线 */
+  --line-faint: #1e2530;
+  --line-subtle: #2a3342;
+  --line-strong: #3a4657;
+
+  /* 文字 */
+  --text-primary: #e6eaf2;
+  --text-secondary: #9aa4b8;
+  --text-muted: #5c6678;
+  --text-inverse: #0b0e13;
+
+  /* 主色：氧化铜青 */
+  --accent: #4fb8a6;
+  --accent-hover: #63c9b8;
+  --accent-dim: rgba(79, 184, 166, 0.14);
+  --accent-press: #3e9484;
+
+  /* 语义色（做旧哑光） */
+  --info: #7a9cc6;
+  --success: #6fa882;
+  --warning: #c9a24b;
+  --danger: #c96a54;
+  --violet: #9d8fc9;
+
+  /* 语义 dim 底 */
+  --info-dim: rgba(122, 156, 198, 0.14);
+  --success-dim: rgba(111, 168, 130, 0.14);
+  --warning-dim: rgba(201, 162, 75, 0.14);
+  --danger-dim: rgba(201, 106, 84, 0.14);
+  --violet-dim: rgba(157, 143, 201, 0.14);
+
+  /* 金属件 */
+  --brass: #c9a24b;
+  --steel: #8b99a8;
+  --copper: #b0764b;
+
+  /* 兼容别名（旧引用兜底） */
+  --line: var(--line-subtle);
+  --fg: var(--text-primary);
+  --brass-dim: rgba(201, 162, 75, 0.45);
+
+  /* 机械质感 */
+  --rivet: radial-gradient(circle at 35% 30%, #6b7688 0 1.2px, #2c333f 1.8px 2.6px, #12161d 3.2px);
+  --screw: radial-gradient(circle at 35% 30%, #59657a 0 1.5px, #232a36 2.2px 3.4px, #10141b 4.2px);
+  --brushed: repeating-linear-gradient(90deg, rgba(255,255,255,0.018) 0 1px, transparent 1px 3px);
+  --well-inset: inset 0 1px 3px rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(0, 0, 0, 0.35);
+  --plate-edge: inset 0 1px 0 rgba(255, 255, 255, 0.05), inset 0 -1px 0 rgba(0, 0, 0, 0.4);
+
+  /* 节点类型色 */
+  --node-start: #5fbf8f;
+  --node-agent: #9b8afb;
+  --node-llm: #6ea8fe;
+  --node-tool: #d9a441;
+  --node-condition: #e08a5b;
+  --node-loop: #4fb3d1;
+  --node-parallel: #b877db;
+  --node-subworkflow: #7c8cf8;
+  --node-approval: #d9a441;
+  --node-transform: #8b93a5;
+  --node-fanout: #c9874b;
+  --node-fanin: #7fb0c9;
+  --node-end: #4fd1c5;
+
+  /* 字体族 */
+  --font-ui: "Inter", "PingFang SC", "Microsoft YaHei UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
+  --font-disp: "Space Grotesk", "Inter", "PingFang SC", sans-serif;
+
+  /* 字阶（1.25 比例） */
+  --fs-display: 22px;
+  --fs-h2: 16px;
+  --fs-h3: 14px;
+  --fs-body: 13px;
+  --fs-caption: 12px;
+  --fs-micro: 11px;
+  --fs-code: 12.5px;
+
+  /* 间距（4px 基网） */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-8: 48px;
+
+  /* 圆角 */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+  --r-btn: 8px;
+  --r-card: 12px;
+  --r-node: 10px;
+
+  /* 机械运动 */
+  --ease-mech: cubic-bezier(0.25, 0.9, 0.3, 1);
+  --t-fast: 160ms;
+  --t-med: 200ms;
+  --t-slow: 250ms;
+
+  /* 层级 */
+  --z-rail: 40;
+  --z-topbar: 30;
+  --z-statusbar: 30;
+  --z-drawer: 60;
+  --z-modal: 70;
+  --z-toast: 80;
+  --z-cmdk: 90;
+}

@@ -1,0 +1,431 @@
+/* ============================================================
+   Clockwork Bench — 通用组件（按钮/徽章/卡片/toast/弹层）
+   ============================================================ */
+
+/* ---------- Button ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  height: 32px;
+  padding: 0 var(--sp-4);
+  border-radius: var(--r-btn);
+  font-size: var(--fs-body);
+  font-weight: 500;
+  border: 1px solid transparent;
+  transition:
+    transform 80ms var(--ease-mech),
+    background var(--t-fast) var(--ease-mech),
+    border-color var(--t-fast) var(--ease-mech),
+    color var(--t-fast) var(--ease-mech);
+  user-select: none;
+  white-space: nowrap;
+}
+/* 拉杆按压行程 */
+.btn:active { transform: translateY(2px); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+
+/* 主按钮：黄铜压杆（顶部高光 + 底部投影 = 金属键帽） */
+.btn--primary {
+  background: linear-gradient(180deg, var(--accent-hover) 0%, var(--accent) 45%, var(--accent-press) 100%);
+  color: var(--text-inverse);
+  border-color: rgba(0, 0, 0, 0.5);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.28),
+    0 2px 0 rgba(0, 0, 0, 0.35);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+.btn--primary:hover:not(:disabled) {
+  background: linear-gradient(180deg, #74d4c3 0%, var(--accent-hover) 45%, var(--accent) 100%);
+}
+.btn--primary:active:not(:disabled) {
+  background: var(--accent-press);
+  box-shadow:
+    inset 0 1px 3px rgba(0, 0, 0, 0.4),
+    0 0 0 rgba(0, 0, 0, 0);
+}
+
+/* 次按钮：钢板按键（拉丝面 + 倒角高光） */
+.btn--secondary {
+  background: linear-gradient(180deg, var(--bg-overlay) 0%, var(--bg-raised) 60%, var(--bg-surface) 100%), var(--brushed);
+  border-color: var(--line-subtle);
+  color: var(--text-primary);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.35),
+    0 2px 0 rgba(0, 0, 0, 0.3);
+}
+.btn--secondary:hover:not(:disabled) { border-color: var(--line-strong); filter: brightness(1.12); }
+.btn--secondary:active:not(:disabled) {
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.45);
+  filter: brightness(0.95);
+}
+
+.btn--ghost { color: var(--text-secondary); }
+.btn--ghost:hover:not(:disabled) { color: var(--text-primary); background: var(--bg-overlay); }
+
+.btn--danger {
+  background: var(--danger-dim);
+  color: var(--danger);
+  border-color: transparent;
+}
+.btn--danger:hover:not(:disabled) { border-color: var(--danger); }
+
+.btn--sm { height: 26px; padding: 0 var(--sp-3); font-size: var(--fs-caption); }
+.btn--icon { width: 32px; padding: 0; }
+.btn--icon.btn--sm { width: 26px; }
+
+/* ---------- Badge ---------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  height: 18px;
+  padding: 0 var(--sp-2);
+  border-radius: var(--r-sm);
+  font-size: var(--fs-micro);
+  font-weight: 500;
+  line-height: 14px;
+  white-space: nowrap;
+}
+.badge--accent { background: var(--accent-dim); color: var(--accent); }
+.badge--info { background: var(--info-dim); color: var(--info); }
+.badge--success { background: var(--success-dim); color: var(--success); }
+.badge--warning { background: var(--warning-dim); color: var(--warning); }
+.badge--danger { background: var(--danger-dim); color: var(--danger); }
+.badge--violet { background: var(--violet-dim); color: var(--violet); }
+.badge--muted { background: var(--bg-overlay); color: var(--text-secondary); }
+/* 节点徽章：左侧 3px 色条 */
+.badge--node { border-radius: 0 var(--r-sm) var(--r-sm) 0; border-left: 3px solid currentColor; }
+
+/* ---------- Card ---------- */
+/* 机械面板：拉丝钢板 + 顶部倒角光 + 底部咬合阴影 */
+.card {
+  position: relative;
+  background: linear-gradient(180deg, var(--bg-raised) 0%, var(--bg-surface) 28%), var(--brushed);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--line-subtle);
+  border-radius: var(--r-card);
+  padding: var(--sp-4);
+  box-shadow:
+    var(--plate-edge),
+    0 2px 6px rgba(0, 0, 0, 0.28);
+}
+.card--hover {
+  transition:
+    transform var(--t-med) var(--ease-mech),
+    border-color var(--t-med) var(--ease-mech);
+}
+.card--hover:hover {
+  transform: translateY(-2px);
+  border-color: var(--brass);
+}
+/* 铭牌面板：四角铆钉（面板类组件可选挂载 .card--riveted） */
+.card--riveted::before,
+.card--riveted::after {
+  content: "";
+  position: absolute;
+  top: 6px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--rivet);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+}
+.card--riveted::before { left: 6px; }
+.card--riveted::after { right: 6px; }
+
+/* ---------- Kbd ---------- */
+.kbd {
+  display: inline-flex;
+  align-items: center;
+  height: 18px;
+  padding: 0 5px;
+  border: 1px solid var(--line-subtle);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: var(--bg-deep);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+}
+
+/* ---------- Toast ---------- */
+.toast-stack {
+  position: fixed;
+  right: var(--sp-4);
+  bottom: calc(28px + var(--sp-4));
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  z-index: var(--z-toast);
+  max-width: 360px;
+}
+.toast {
+  position: relative;
+  display: flex;
+  gap: var(--sp-3);
+  align-items: flex-start;
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--bg-raised);
+  border: 1px solid var(--line-subtle);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  animation: stamp-in var(--t-fast) var(--ease-mech) both;
+}
+.toast::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--info);
+}
+.toast--success::before { background: var(--success); }
+.toast--warning::before { background: var(--warning); }
+.toast--error::before { background: var(--danger); }
+.toast__body { flex: 1; min-width: 0; font-size: var(--fs-caption); line-height: 16px; }
+.toast__title { font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
+.toast__msg { color: var(--text-secondary); word-break: break-word; }
+.toast__close {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1;
+  padding: 2px;
+}
+.toast__close:hover { color: var(--text-primary); }
+.toast__timer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--line-strong);
+  animation: toast-timer linear both;
+}
+@keyframes toast-timer {
+  from { width: 100%; }
+  to { width: 0; }
+}
+
+/* ---------- Modal ---------- */
+.modal-mask {
+  position: fixed;
+  inset: 0;
+  background: rgba(11, 14, 19, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-modal);
+}
+.modal {
+  position: relative;
+  background: linear-gradient(180deg, var(--bg-raised) 0%, var(--bg-surface) 100%);
+  border: 1px solid var(--line-subtle);
+  border-radius: var(--r-lg);
+  padding: var(--sp-5);
+  min-width: 380px;
+  max-width: min(560px, calc(100vw - 48px));
+  max-height: calc(100vh - 96px);
+  overflow: auto;
+  box-shadow:
+    var(--plate-edge),
+    0 12px 40px rgba(0, 0, 0, 0.55);
+  animation: stamp-in var(--t-fast) var(--ease-mech) both;
+}
+/* 弹层四角螺丝 */
+.modal::before,
+.modal::after {
+  content: "";
+  position: absolute;
+  top: 8px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--screw);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+}
+.modal::before { left: 8px; }
+.modal::after { right: 8px; }
+
+/* ---------- Drawer ---------- */
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 360px;
+  background: var(--bg-deep);
+  border-left: 1px solid var(--line-subtle);
+  z-index: var(--z-drawer);
+  animation: drawer-in var(--t-slow) var(--ease-mech) both;
+  display: flex;
+  flex-direction: column;
+}
+@keyframes drawer-in {
+  from { transform: translateX(24px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* ---------- Tooltip ---------- */
+[data-tip] { position: relative; }
+[data-tip]:hover::after {
+  content: attr(data-tip);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 6px);
+  transform: translateX(-50%);
+  background: var(--bg-raised);
+  border: 1px solid var(--line-subtle);
+  border-radius: var(--r-sm);
+  color: var(--text-secondary);
+  font-size: var(--fs-micro);
+  padding: 3px var(--sp-2);
+  white-space: nowrap;
+  z-index: var(--z-toast);
+  animation: stamp-in var(--t-fast) var(--ease-mech) var(--t-slow) both;
+  pointer-events: none;
+}
+
+/* ---------- Switch：黄铜拨杆 ---------- */
+.switch {
+  position: relative;
+  width: 36px;
+  height: 20px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #0c0e12, #161a21);
+  border: 1px solid rgba(0, 0, 0, 0.55);
+  box-shadow: var(--well-inset);
+  transition: background var(--t-fast) var(--ease-mech);
+  flex: none;
+  cursor: pointer;
+}
+.switch::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 30%, #d7dee9 0%, var(--steel) 55%, #4d5a6b 100%);
+  box-shadow:
+    inset 0 -1px 2px rgba(0, 0, 0, 0.4),
+    0 1px 2px rgba(0, 0, 0, 0.55);
+  transition:
+    transform var(--t-med) var(--ease-mech),
+    background var(--t-fast) var(--ease-mech);
+}
+.switch[aria-checked="true"] {
+  background: linear-gradient(180deg, #24331f, #2f4426);
+  border-color: rgba(201, 162, 75, 0.4);
+}
+.switch[aria-checked="true"]::after {
+  transform: translateX(16px);
+  background: radial-gradient(circle at 35% 30%, #e8cd85 0%, var(--brass) 55%, #7d6126 100%);
+}
+
+/* ---------- 表单 ---------- */
+.field { display: flex; flex-direction: column; gap: var(--sp-1); }
+.field > label {
+  font-size: var(--fs-micro);
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.field input,
+.field select,
+.field textarea { padding: 6px var(--sp-3); font-size: var(--fs-body); }
+.field .hint { font-size: var(--fs-micro); color: var(--text-muted); }
+
+/* 滑杆（参数面板）：凹槽轨道 + 带刻纹的机械滑块 */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  background: linear-gradient(180deg, #0c0e12, #14171d);
+  border: none;
+  border-radius: 3px;
+  box-shadow: var(--well-inset);
+  cursor: pointer;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 18px;
+  border-radius: 3px;
+  background:
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.35) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, #e0be6d 0%, var(--brass) 45%, #8f6f2c 100%);
+  border: 1px solid rgba(0, 0, 0, 0.6);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 2px 3px rgba(0, 0, 0, 0.5);
+  cursor: grab;
+}
+input[type="range"]::-webkit-slider-thumb:active {
+  cursor: grabbing;
+  background:
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.35) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, #a8842f 0%, var(--brass) 100%);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 12px;
+  height: 18px;
+  border-radius: 3px;
+  background:
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.35) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, #e0be6d 0%, var(--brass) 45%, #8f6f2c 100%);
+  border: 1px solid rgba(0, 0, 0, 0.6);
+  cursor: grab;
+}
+input[type="range"]::-moz-range-track {
+  height: 6px;
+  background: linear-gradient(180deg, #0c0e12, #14171d);
+  border-radius: 3px;
+  box-shadow: var(--well-inset);
+}
+
+/* ---------- 骨架 ---------- */
+.skeleton {
+  background: var(--bg-surface);
+  border-radius: var(--r-sm);
+  position: relative;
+  overflow: hidden;
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent 0 7px,
+    rgba(255, 255, 255, 0.025) 7px 8px
+  );
+}
+
+/* ---------- Tabs ---------- */
+.tabs {
+  display: flex;
+  gap: var(--sp-4);
+  border-bottom: 1px solid var(--line-faint);
+  position: relative;
+}
+.tab {
+  padding: var(--sp-2) 0;
+  color: var(--text-secondary);
+  font-size: var(--fs-body);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color var(--t-fast) var(--ease-mech);
+}
+.tab:hover { color: var(--text-primary); }
+.tab[aria-selected="true"] { color: var(--accent); border-bottom-color: var(--accent); }

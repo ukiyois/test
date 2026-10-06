@@ -1,0 +1,39 @@
+{
+  "architectures": [
+    "XmodelForCausalLM"
+  ],
+  "attention_bias": false,
+  "attention_dropout": 0.0,
+  "auto_map": {
+    "AutoConfig": "configuration_xmodel2.XmodelConfig",
+    "AutoModelForCausalLM": "modeling_xmodel2.XmodelForCausalLM"
+  },
+  "bos_token_id": 1,
+  "eos_token_id": 2,
+  "hidden_act": "silu",
+  "hidden_size": 1536,
+  "initializer_range": 0.1,
+  "intermediate_size": 3840,
+  "max_position_embeddings": 131072,
+  "mlp_bias": false,
+  "model_type": "xmodel",
+  "mup_attention_residual_scale": 1.4,
+  "mup_base_width": 256,
+  "mup_ffn_residual_scale": 1.4,
+  "mup_input_scale": 12.0,
+  "mup_output_scale": 1.0,
+  "mup_width_multiplier": 6.0,
+  "num_attention_heads": 24,
+  "num_hidden_layers": 48,
+  "num_key_value_heads": 8,
+  "pretraining_tp": 1,
+  "rms_norm_eps": 1e-05,
+  "rope_scaling": null,
+  "rope_theta": 500000,
+  "torch_dtype": "bfloat16",
+  "transformers_version": "4.53.3",
+  "use_cache": true,
+  "use_mup": true,
+  "vocab_size": 129280,
+  "_attn_implementation": "eager"
+}
