@@ -78,6 +78,26 @@ Harness 支持 Agent、模型调用、工具、条件分支、文本转换、人
 
 Agent API 使用“模型与 API”页的同一平台 Key；本机服务默认绑定 `127.0.0.1`。运行定义按发布版本存档，不向 Agent 列表接口暴露系统提示词或工具配置。
 
+## 自强化助手模式
+
+聊天页右下角开启“助手”拨杆后，对话接入工具循环，模型可直接读写改本项目代码并热更新。工具清单见 [AGENT.md](AGENT.md)：
+
+- 探查：`list_files` / `grep_code` / `read_file` / `search_files` / `semantic_search`
+- 修改：`write_file` / `apply_patch`（写前自动备份到 `data/patch_backups/`，可 `restore_backup` 回滚）
+- 执行：`run_command`（项目根自由命令，仅拦截删盘/格式化等系统级操作）/ `restart_service`
+
+三级审批模式（助手拨杆旁下拉）：
+
+- **手动审批**：每个危险操作弹确认
+- **自动审批**：项目内写文件/补丁/构建命令自动放行，破坏性命令转人工
+- **完全访问**：项目内所有操作直接执行
+
+无论哪级，沙箱始终拦截项目根之外路径、`.git`/`.venv`/`data/secrets` 等受保护目录、非白名单扩展名写入。上下文超过模型窗口 75% 时自动 compact（生成 handoff 摘要替换早期消息），防止 prompt 滚雪球。
+
+## 成本与定价
+
+本地模型成本记 0。远程 API 按 `_DEFAULT_PRICING`（DeepSeek/Kimi，美元/千 token）计价，可用 `GET/POST /api/pricing` 覆盖单价、`POST /api/budget` 设日/月预算。监控页显示远程成本数码管、本地/远程 token 占比条、模型行成本列与预算进度。
+
 “运行监控”每 5 秒采集 CPU、系统内存、平台进程内存、NVIDIA GPU 利用率、温度和显存数据；本机保留最近 7 天采样。监控页同时汇总 Harness 状态、成功率、运行耗时和节点耗时。没有可用的 `nvidia-smi` 时，GPU 指标显示为不可用，不会以 0 冒充真实读数。接口：`GET /api/monitoring?window_minutes=60`。
 
 运行状态、事件、工作流版本和文件保存在 data/。
