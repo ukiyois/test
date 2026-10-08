@@ -6,11 +6,13 @@ Windows 本地模型与 Agent 工作流平台。提供本地模型切换、OpenA
 
 使用当前已安装的 Python 环境运行：
 
-    .\start.ps1
+    .\start.bat
 
-脚本会在后台启动服务并打开 http://127.0.0.1:7860。停止服务：
+脚本会在后台启动服务并打开 http://127.0.0.1:7860。重复执行会检测到服务已在运行，不会重复启动；`start.bat nobrowser` 可跳过打开浏览器。停止服务：
 
-    .\stop.ps1
+    .\stop.bat
+
+也提供 PowerShell 版本（`start.ps1` / `stop.ps1`），功能相同。
 
 如果缺少 Python 包：
 
